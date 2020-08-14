@@ -3,7 +3,7 @@ void drawRadioExercise() {
         scale(50, 50, 50);
         rotateY(PI);
         fill(100);
-        isDeepBreath = isLegExpansion = false;
+        isDeepBreath = isLegExpansion = isArmRotation = false;
         if(isDeepBreath) {
             armOmg = .05;
             deepBreath();
@@ -14,6 +14,10 @@ void drawRadioExercise() {
         } else if(isArmRotation) {
             armOmg = .05;
             armRotation();
+        } else if(isChestCurving) {
+            armOmg = .05;
+            chestCurving();
         }
+        //testMovements();
     popMatrix();
 }

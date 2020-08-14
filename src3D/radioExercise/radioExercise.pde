@@ -10,6 +10,7 @@ void setup() {
 
 void draw() {
     background(255);
+    fill(150);
     translate(width/2, height/2, -width/2);
     rotateX(map(mouseY, 0, height, PI, -PI));
     rotateY(map(mouseX, 0, width, -PI, PI));
