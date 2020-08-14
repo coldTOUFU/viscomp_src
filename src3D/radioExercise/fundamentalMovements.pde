@@ -1,5 +1,3 @@
-float armAng, legAng, bodyAng = 0; // only 3 are enough, using symmetry.
-
 void rotateTrunk(float xAng, float yAng, float zAng) {
     rotateX(xAng); rotateY(yAng); rotateZ(zAng);
     translate(0, -.875, 0); // trunk: box(1., 1.75, .75);. called place will be root of trunk, neck.
@@ -58,5 +56,4 @@ void testMovements() {
         scale(.7);
         rotateLimb(0, 0, 0, 0, 0, 0);
     popMatrix();
-    armAng += .1;
 }
