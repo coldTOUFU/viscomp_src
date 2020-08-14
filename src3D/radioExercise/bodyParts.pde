@@ -1,15 +1,15 @@
 void head() {
-    box(1., 1.25, 1.);
+    box(HEAD_X, HEAD_Y, HEAD_Z);
 }
 
 void trunk() {
-    box(1., 3., 1.);
+    box(TRUNK_X, TRUNK_Y, TRUNK_Z);
 }
 
 void hip() {
-    box(1., .5, .5);
+    box(HIP_X, HIP_Y, HIP_Z);
 }
 
 void limb() {
-    box(1., 2.5, 1.);
+    box(LIMB_X, LIMB_Y, LIMB_Z);
 }
