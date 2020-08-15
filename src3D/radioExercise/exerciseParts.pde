@@ -69,7 +69,7 @@ void deepBreath() {
     }
 
     armAng += armOmg;
-    if(armAng > 2*PI) {
+    if(armAng > PI*2) {
         isDeepBreath = false;
         initializeVals();
     }
@@ -128,7 +128,7 @@ void armRotation() {
                   0, 0, 0,
                   0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0);
-    } else if(armAng <= 3*PI+PI/2) {
+    } else if(armAng <= PI*3+PI/2) {
         wholeBody(0, 0, 0,
                   0, 0, -armAng+PI, 0, 0, 0, // current_pos + former_pos.
                   0, 0, armAng-PI, 0, 0, 0,
@@ -137,7 +137,7 @@ void armRotation() {
                   0, 0, 0, 0, 0, 0);
     } else {
         wholeBody(0, 0, 0,
-                  0, 0, armAng, 0, 0, 0, // current_pos + former_pos, former_pos = 2*PI = 0.
+                  0, 0, armAng, 0, 0, 0, // current_pos + former_pos, former_pos = PI*2 = 0.
                   0, 0, -armAng, 0, 0, 0,
                   0, 0, 0,
                   0, 0, 0, 0, 0, 0,
@@ -145,7 +145,7 @@ void armRotation() {
     } //<>//
     
     armAng += armOmg;
-     if(armAng > 6*PI) {
+    if(armAng > PI*6) {
         isArmRotation = false;
         initializeVals();
     }
@@ -189,4 +189,48 @@ void chestCurving() {
                   0, 0, 0, 0, 0, 0);
     }
     armAng += armOmg;
+    if(armAng > PI*4) {
+        isChestCurving = false;
+        initializeVals();
+    }
+}
+
+void bodyBendingBeside(boolean isRight) {
+    if(armAng <= PI) {
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng * btoi(!isRight), 0, 0, 0,
+                  0, 0, armAng * btoi(isRight), 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+    } else if(armAng <= PI*7/6) {
+        wholeBody(0, 0, trunkAng * (float)Math.pow(-1, btoi(!isRight)),
+                  0, 0, -PI * btoi(!isRight), 0, 0, -(armAng-PI) * btoi(!isRight),
+                  0, 0, PI * btoi(isRight), 0, 0, (armAng-PI) * btoi(isRight),
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+        trunkAng += trunkOmg;
+    } else if(armAng <= PI*8/6) {
+        wholeBody(0, 0, trunkAng * (float)Math.pow(-1, btoi(!isRight)),
+                  0, 0, -PI * btoi(!isRight), 0, 0, (armAng - PI*8/6) * btoi(!isRight),
+                  0, 0, PI * btoi(isRight), 0, 0, -(armAng - PI*8/6) * btoi(isRight),
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+        trunkAng -= trunkOmg;
+    } else if(armAng <= PI*14/6) {
+        wholeBody(0, 0, 0,
+                  0, 0, (armAng-PI*14/6) * btoi(!isRight), 0, 0, 0,
+                  0, 0, -(armAng-PI*14/6) * btoi(isRight), 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+    }
+
+    armAng += armOmg;
+    if(armAng > PI*14/6) {
+        isBodyBendingBeside = false;
+        initializeVals();
+    }
 }
