@@ -234,3 +234,20 @@ void bodyBendingBeside(boolean isRight) {
         initializeVals();
     }
 }
+
+void bodyBendingBackForward() {
+    if(legOmg > 0) {
+        humanX = 2*sin(legAng);
+        wholeBody(0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+                  
+        legAng += legOmg;
+        if(legAng > PI/6) {
+            legOmg = -legOmg;
+        }
+    }
+}
