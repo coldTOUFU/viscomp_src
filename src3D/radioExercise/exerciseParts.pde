@@ -51,6 +51,96 @@ void wholeBody(float trunkX, float trunkY, float trunkZ,
     head();
 }
 
+class Exercise {
+    protected int count;
+    protected float armAng, legAng, trunkAng, hipAng;
+    protected float armOmg, legOmg, trunkOmg, hipOmg; // Omega: angular velocity.
+    protected float humanX, humanY, humanZ; // place of the center of human's head.
+    
+    public Exercise() {
+        initializeVals();
+    }
+    
+    protected void initializeVals() {
+        armAng = legAng = trunkAng = hipAng = 0;
+        armOmg = legOmg = trunkOmg = hipOmg = 0;
+        humanX = humanY = humanZ = 0;
+    }
+    
+    public void setCount(int i) {
+        count = i;
+    }
+    
+    public int getCount() {
+        return count;
+    }
+    
+    public void setArmOmg(float omg) {
+        armOmg = omg;
+    }
+    
+    public void setLegOmg(float omg) {
+        legOmg = omg;
+    }
+    
+    public void setTrunkOmg(float omg) {
+        trunkOmg = omg;
+    }
+    
+    public void setHipOmg(float omg) {
+        hipOmg = omg;
+    }
+}
+
+class DeepBreath extends Exercise {
+    private boolean isBreathIn, isBreathOut;
+  
+    protected void initializeVals() {
+        super.initializeVals();
+        isBreathIn = true;
+        isBreathOut = true;
+    }
+    
+    private void breathIn() {   
+        wholeBody(0, 0, 0,
+                  armAng, 0, 0, 0, 0, 0,
+                  armAng, 0, 0, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+                  
+        armAng += armOmg;
+        
+        if(armAng > PI) {
+            isBreathIn = false;
+            armAng = 0;
+            return;
+        }
+    }
+    
+    private void breathOut() {      
+        wholeBody(0, 0, 0,
+              PI, 0, -armAng, 0, 0, 0,
+              PI, 0, armAng, 0, 0, 0,
+              0, 0, 0,
+              0, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0);
+                  
+        armAng += armOmg;
+        
+        if(armAng > PI) {
+            isBreathOut = false;
+            armAng = 0;
+            count--;
+        }
+    }
+    
+    public void exec() {
+        if(isBreathIn)       { breathIn(); }
+        else if(isBreathOut) { breathOut(); }
+    }
+}
+
 void deepBreath() {
     if(armAng <= PI) {
         wholeBody(0, 0, 0,

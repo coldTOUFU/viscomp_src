@@ -12,11 +12,8 @@ static boolean isDeepBreath, isLegExpansion, isArmRotation, isChestCurving,
                isBodyBendingBeside, isBodyBendingBackForward, isBodyTwinsting,
                isArmExpansionUpward, isBodyCurveDiagonaly, isBodyRotation, isJump;
 
-static boolean isFirstHalf;
-
 void initializeVals() {
     armAng = legAng = trunkAng = hipAng = 0;
     armOmg = legOmg = trunkOmg = hipOmg = 0;
     humanX = humanY = humanZ = 0;
-    isFirstHalf = true;
 }

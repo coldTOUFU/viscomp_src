@@ -1,11 +1,12 @@
+DeepBreath first;
+
 void setup() {
     size(600, 600, P3D);
     noStroke();
     
     // initialization for exercises.
-    isDeepBreath = isLegExpansion = isArmRotation = isChestCurving =
-    isBodyBendingBeside = isBodyBendingBackForward = isBodyTwinsting =
-    isArmExpansionUpward = isBodyCurveDiagonaly = isBodyRotation = isJump = true;
+    first = new DeepBreath();
+    first.setCount(2);
 }
 
 void draw() {
