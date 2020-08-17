@@ -1,4 +1,6 @@
 DeepBreath first;
+LegExpansion second;
+ArmRotation third;
 
 void setup() {
     size(600, 600, P3D);
@@ -6,7 +8,13 @@ void setup() {
     
     // initialization for exercises.
     first = new DeepBreath();
-    first.setCount(2);
+    first.setCount(0);
+    
+    second = new LegExpansion();
+    second.setCount(0);
+    
+    third = new ArmRotation();
+    third.setCount(0);
 }
 
 void draw() {

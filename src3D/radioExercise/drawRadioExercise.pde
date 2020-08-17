@@ -7,7 +7,13 @@ void drawRadioExercise() {
         
         if(first.getCount() > 0) {
             first.setArmOmg(.05);
-            first.exec(); //<>//
+            first.exec();
+        } else if(second.getCount() > 0) {
+            second.setArmOmg(.05); second.setLegOmg(.05);
+            second.exec();
+        } else if(third.getCount() > 0) {
+            third.setArmOmg(.05);
+            third.exec();
         }
     popMatrix();
 }
