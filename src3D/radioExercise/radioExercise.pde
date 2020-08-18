@@ -1,6 +1,10 @@
 DeepBreath first;
 LegExpansion second;
 ArmRotation third;
+ChestCurving fourth;
+BodyBendingBeside fifth;
+BodyBendingBackForward sixth;
+BodyTwisting seventh;
 
 void setup() {
     size(600, 600, P3D);
@@ -15,6 +19,18 @@ void setup() {
     
     third = new ArmRotation();
     third.setCount(0);
+    
+    fourth = new ChestCurving();
+    fourth.setCount(0);
+    
+    fifth = new BodyBendingBeside();
+    fifth.setCount(0);
+    
+    sixth = new BodyBendingBackForward();
+    sixth.setCount(0);
+    
+    seventh = new BodyTwisting();
+    seventh.setCount(2);
 }
 
 void draw() {
