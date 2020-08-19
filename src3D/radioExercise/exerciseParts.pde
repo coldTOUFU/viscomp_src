@@ -828,6 +828,108 @@ class ShoulderBending extends Exercise {
     }
 }
 
-class BendHip extends Exercise {
+class HipBending extends Exercise {
+    private boolean isBendHip, isReturnHip, isOpenArm, isReturnArm;
+    private boolean isRight;
     
+    public HipBending() {
+        super();
+        isRight = true;
+    }
+    
+    protected void initializeVals() {
+        super.initializeVals();
+        isBendHip = true;
+        isReturnHip = true;
+        isOpenArm = true;
+        isReturnArm = true;
+    }
+    
+    private void bendHip() {
+        float dir = (float)Math.pow(-1, btoi(isRight));
+        humanX = 2.*sin(legAng)*dir;
+
+        wholeBody(0, 0, 0,
+                  armAng, 0, armAng/6, 0, 0, 0,
+                  armAng, 0, -armAng/6, 0, 0, 0,
+                  -hipAng, -hipAng/2*dir, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+         
+        armAng += armOmg;
+        hipAng += hipOmg;
+        legAng += legOmg;
+        
+        if(armAng > PI/2) {
+            armAng = PI/2;
+            hipAng = PI/2;
+            legAng = PI/6;
+            isBendHip = false;
+        }
+    }
+    
+    private void returnHip() {
+        float dir = (float)Math.pow(-1, btoi(isRight));
+        humanX = 2.*sin(legAng)*dir;
+
+        wholeBody(0, 0, 0,
+                  armAng, 0, armAng/6, 0, 0, 0,
+                  armAng, 0, -armAng/6, 0, 0, 0,
+                  -hipAng, -hipAng/2*dir, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+         
+        armAng -= armOmg;
+        hipAng -= hipOmg;
+        legAng -= legOmg;
+        
+        if(armAng < 0) {
+            armAng = 0;
+            hipAng = 0;
+            legAng = 0;
+            isReturnHip = false;
+        }
+    }
+    
+    private void openArm() {
+      
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, 0,
+                  0, 0, armAng, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+
+        armAng += armOmg;
+
+        if(armAng > PI/6) {
+            armAng = PI/6;
+            isOpenArm = false;
+        }
+    }
+
+    private void returnArm() {
+      
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, 0,
+                  0, 0, armAng, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0);
+
+        armAng -=armOmg;
+
+        if(armAng < 0) {
+            initializeVals();
+            isRight = !isRight;
+            count--;
+        }
+    }
+
+    public void exec() {
+        if(isBendHip)        { bendHip(); }
+        else if(isReturnHip) { returnHip(); }
+        else if(isOpenArm)   { openArm(); }
+        else if(isReturnArm) { returnArm(); }
+    }
 }

@@ -35,6 +35,11 @@ void drawRadioExercise() {
             eighth.setArmOmg(.05);
             eighth.setLegOmg(.05/6);
             eighth.exec();
+        } else if(ninth.getCount() > 0) {
+            ninth.setArmOmg(.025);
+            ninth.setHipOmg(.025);
+            ninth.setLegOmg(.025/3);
+            ninth.exec();
         }
     popMatrix();
 }
