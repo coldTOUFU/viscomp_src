@@ -5,6 +5,7 @@ ChestCurving fourth;
 BodyBendingBeside fifth;
 BodyBendingBackForward sixth;
 BodyTwisting seventh;
+ShoulderBending eighth;
 
 void setup() {
     size(600, 600, P3D);
@@ -30,7 +31,10 @@ void setup() {
     sixth.setCount(0);
     
     seventh = new BodyTwisting();
-    seventh.setCount(2);
+    seventh.setCount(0);
+    
+    eighth = new ShoulderBending();
+    eighth.setCount(2);
 }
 
 void draw() {

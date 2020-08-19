@@ -727,3 +727,94 @@ class BodyTwisting extends Exercise {
         else if(isTwistArmBig)   { twistArmBig(); }
     }
 }
+
+class ShoulderBending extends Exercise {
+    private boolean isBendShoulder, isArmUp, isBackShoulder, isReturnToStandardPosture;
+    
+    protected void initializeVals() {
+        super.initializeVals();
+        isBendShoulder = true;
+        isArmUp = true;
+        isBackShoulder = true;
+        isReturnToStandardPosture = true;
+    }
+    
+    private void bendShoulder() {
+        humanX = 2.*sin(legAng);
+
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, -armAng*3/2,
+                  0, 0, armAng, 0, 0, armAng*3/2,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+        
+        armAng += armOmg;
+        legAng += legOmg;
+        
+        if(armAng > PI/2) {
+            armAng = PI/2;
+            legAng = PI/12;
+            humanX = 2.*sin(PI/12);
+            isBendShoulder = false;
+        }          
+    }
+    
+    private void armUp() {
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, -PI*6/4 + armAng*3/2,
+                  0, 0, armAng, 0, 0, PI*6/4 - armAng*3/2,
+                  0, 0, 0,
+                  0, 0, -PI/12, 0, 0, 0,
+                  0, 0, PI/12, 0, 0, 0);
+        
+        armAng += armOmg;
+        
+        if(armAng > PI) {
+            armAng = PI;
+            isArmUp = false;
+        }
+    }
+    
+    private void backShoulder() {
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, -PI*6/4 + armAng*3/2,
+                  0, 0, armAng, 0, 0, PI*6/4 - armAng*3/2,
+                  0, 0, 0,
+                  0, 0, -PI/12, 0, 0, 0,
+                  0, 0, PI/12, 0, 0, 0);
+        
+        armAng -= armOmg;
+        
+        if(armAng < PI/2) {
+            armAng = PI/2;
+            isBackShoulder = false;
+        }
+    }
+    
+    private void returnToStandardPosture() {
+        humanX = 2.*sin(legAng);
+
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, -armAng*3/2,
+                  0, 0, armAng, 0, 0, armAng*3/2,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+        
+        armAng -= armOmg;
+        legAng -= legOmg;
+        
+        if(armAng < 0) {
+            initializeVals();
+            count--;
+        }
+    }
+    
+    public void exec() {
+        if(isBendShoulder)                 { bendShoulder(); }
+        else if(isArmUp)                   { armUp(); }
+        else if(isBackShoulder)            { backShoulder(); }
+        else if(isReturnToStandardPosture) { returnToStandardPosture(); }
+    }
+}
