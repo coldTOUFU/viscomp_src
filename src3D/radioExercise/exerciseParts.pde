@@ -176,7 +176,7 @@ class LegExpansion extends Exercise {
                   0, 0, -legAng/2, 0, 0, legAng,
                   0, 0, legAng/2, 0, 0, -legAng);
                   
-        armAng += armOmg; //<>//
+        armAng += armOmg; //<>// //<>//
         legAng += legOmg;
         
         if(armAng > 0) {
@@ -196,7 +196,7 @@ class LegExpansion extends Exercise {
                   0, 0, -legAng/2, 0, 0, legAng,
                   0, 0, legAng/2, 0, 0, -legAng);
 
-        armAng += armOmg; //<>//
+        armAng += armOmg; //<>// //<>//
         legAng -= legOmg;
         if(armAng > PI/2) {
             isExpandLeg = false;
@@ -380,7 +380,7 @@ class ChestCurving extends Exercise {
         else if(isCurveChest)              { curveChest(); }
         else if(isReturnToStandardPosture) { returnToStandardPosture(); }
     }
-} //<>//
+} //<>// //<>//
 
 class BodyBendingBeside extends Exercise {
     private boolean isArmUp, isBendArm, isReturnArm, isDownArm;
@@ -699,7 +699,7 @@ class BodyTwisting extends Exercise {
         float dir = (float)Math.pow(-1, btoi(isRight));
         if(shakeCount <= 2 && shakeCount % 2 == 0) { armOmg *= 2.; }
 
-        wholeBody(0, trunkAng * dir, 0, //<>//
+        wholeBody(0, trunkAng * dir, 0, //<>// //<>//
                   0, 0, -armAng * dir * btoi(!isRight), 0, 0, -armAng * dir * btoi(isRight),
                   0, 0, -armAng * dir * btoi(isRight), 0, 0, -armAng * dir * btoi(!isRight),
                   0, 0, 0,
@@ -730,6 +730,12 @@ class BodyTwisting extends Exercise {
 
 class ShoulderBending extends Exercise {
     private boolean isBendShoulder, isArmUp, isBackShoulder, isReturnToStandardPosture;
+    private boolean isRight;
+    
+    public ShoulderBending() {
+        super();
+        isRight = true;
+    }    
     
     protected void initializeVals() {
         super.initializeVals();
@@ -740,7 +746,8 @@ class ShoulderBending extends Exercise {
     }
     
     private void bendShoulder() {
-        humanX = 2.*sin(legAng);
+        float dir = (float)Math.pow(-1, btoi(isRight));
+        humanX = 2.*sin(legAng)*dir;
 
         wholeBody(0, 0, 0,
                   0, 0, -armAng, 0, 0, -armAng*3/2,
@@ -755,7 +762,7 @@ class ShoulderBending extends Exercise {
         if(armAng > PI/2) {
             armAng = PI/2;
             legAng = PI/12;
-            humanX = 2.*sin(PI/12);
+            humanX = 2.*sin(PI/12)*dir;
             isBendShoulder = false;
         }          
     }
@@ -793,7 +800,8 @@ class ShoulderBending extends Exercise {
     }
     
     private void returnToStandardPosture() {
-        humanX = 2.*sin(legAng);
+        float dir = (float)Math.pow(-1, btoi(isRight));
+        humanX = 2.*sin(legAng)*dir;
 
         wholeBody(0, 0, 0,
                   0, 0, -armAng, 0, 0, -armAng*3/2,
@@ -807,6 +815,7 @@ class ShoulderBending extends Exercise {
         
         if(armAng < 0) {
             initializeVals();
+            isRight = !isRight;
             count--;
         }
     }
@@ -817,4 +826,8 @@ class ShoulderBending extends Exercise {
         else if(isBackShoulder)            { backShoulder(); }
         else if(isReturnToStandardPosture) { returnToStandardPosture(); }
     }
+}
+
+class BendHip extends Exercise {
+    
 }
