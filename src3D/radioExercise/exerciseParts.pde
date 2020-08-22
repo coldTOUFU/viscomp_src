@@ -358,6 +358,8 @@ class ChestCurving extends Exercise {
     }
     
     private void returnToStandardPosture() {
+        trunkOmg *= 2.;
+        
         wholeBody(trunkAng, 0, 0,
                   0, 0, -armAng, 0, 0, 0,
                   0, 0, armAng, 0, 0, 0,
@@ -400,7 +402,7 @@ class BodyBendingBeside extends Exercise {
     }
     
     private void armUp() {
-        wholeBody(0, 0, 0,
+        wholeBody(0, 0, 0, //<>//
                   0, 0, -armAng * btoi(!isRight), 0, 0, 0,
                   0, 0, armAng * btoi(isRight), 0, 0, 0,
                   0, 0, 0,
@@ -417,8 +419,8 @@ class BodyBendingBeside extends Exercise {
     
     private void bendArm() {
         float dir = (float)Math.pow(-1, btoi(!isRight));
-        trunkOmg /= 6;
-        armOmg /= 6;
+        trunkOmg /= 2;
+        armOmg /= 2;
         
         wholeBody(0, 0, trunkAng * dir,
                   0, 0, -PI * btoi(!isRight), 0, 0, -armAng * btoi(!isRight),
@@ -439,8 +441,8 @@ class BodyBendingBeside extends Exercise {
     
     private void returnArm() {
         float dir = (float)Math.pow(-1, btoi(!isRight));
-        trunkOmg /= 6;
-        armOmg /= 6;
+        trunkOmg /= 2;
+        armOmg /= 2;
         
         wholeBody(0, 0, trunkAng * dir,
                   0, 0, -PI * btoi(!isRight), 0, 0, -armAng * btoi(!isRight),
@@ -476,6 +478,9 @@ class BodyBendingBeside extends Exercise {
     }
     
     public void exec() {
+        if(Math.ceil(count / 2.) % 2 == 0) { isRight = true; }
+        else               { isRight = false; }
+        
         if(isArmUp)          { armUp(); }
         else if(isBendArm)   { bendArm(); }
         else if(isReturnArm) { returnArm(); }
@@ -516,6 +521,9 @@ class BodyBendingBackForward extends Exercise {
     }
     
     private void hipForward() {
+        trunkOmg /= 2.;
+        armOmg /= 2.;
+      
         wholeBody(trunkAng, 0, 0,
                   armAng, 0, 0, 0, 0, 0,
                   armAng, 0, 0, 0, 0, 0,
@@ -534,6 +542,9 @@ class BodyBendingBackForward extends Exercise {
     }
     
     private void hipBackFromForward() {
+        trunkOmg /= 2.;
+        armOmg /= 2.;
+      
         wholeBody(trunkAng, 0, 0,
                   armAng, 0, 0, 0, 0, 0,
                   armAng, 0, 0, 0, 0, 0,
@@ -579,9 +590,9 @@ class BodyBendingBackForward extends Exercise {
                   
         trunkAng += trunkOmg;
         
-        if(trunkAng > PI/4) {
+        if(trunkAng > PI/3) {
             isHipBackward = false;
-            trunkAng = PI/4;
+            trunkAng = PI/3;
         }
     }
     
@@ -892,6 +903,7 @@ class HipBending extends Exercise {
     }
     
     private void openArm() {
+        armOmg /= 2.;
       
         wholeBody(0, 0, 0,
                   0, 0, -armAng, 0, 0, 0,
@@ -931,5 +943,138 @@ class HipBending extends Exercise {
         else if(isReturnHip) { returnHip(); }
         else if(isOpenArm)   { openArm(); }
         else if(isReturnArm) { returnArm(); }
+    }
+}
+
+class BodyBigRotation extends Exercise {
+    private boolean isOpenLeg, isArmUp, isRotateBodyDown, isRotateBodyUp, isCloseLeg;
+    private boolean isRight;
+    
+    public BodyBigRotation() {
+        super();
+        isOpenLeg = true; // is used only at first time.
+        isCloseLeg = false; // is used only at last time.
+        isRight = true;
+    }
+    
+    protected void initializeVals() {
+        super.initializeVals();
+        isArmUp = true;
+        isRotateBodyDown = true;
+        isRotateBodyUp = true;
+    }
+    
+    private void openLeg() {
+        humanX = 2.*sin(legAng);
+        
+        wholeBody(0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+                  
+        legAng += legOmg;
+        
+        if(legAng > PI/6) {
+            isOpenLeg = false;
+            legAng = PI/6;
+        }
+    }
+    
+    private void armUp() {
+        legAng = PI/6;
+        float dir = (float)Math.pow(-1, btoi(!isRight));
+        humanX = 2.*sin(PI/6);
+         //<>//
+        wholeBody(0, 0, - PI/6 * sin(trunkAng) * dir,
+                  0, 0, armAng * dir, 0, 0, 0,
+                  0, 0, armAng * dir, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+            
+        armAng += armOmg;
+        trunkAng += trunkOmg;
+                  
+        if(armAng > PI/2) {
+            isArmUp = false;
+            armAng = 0;
+            trunkAng = PI/2;
+        }
+    }
+    
+    private void rotateBodyDown() {
+        float dir = (float)Math.pow(-1, btoi(!isRight));
+        humanX = 2.*sin(PI/6);
+        
+        wholeBody(PI/4 * cos(trunkAng), 0, - PI/6 * sin(trunkAng) * dir,
+                  0, armAng * dir, PI/2 * dir, 0, 0, 0,
+                  0, armAng * dir, PI/2 * dir, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -PI/6, 0, 0, 0,
+                  0, 0, PI/6, 0, 0, 0);
+            
+        armAng += armOmg;
+        trunkAng += trunkOmg;
+                  
+        if(armAng > PI) {
+            isRotateBodyDown = false;
+            armAng = PI/2;
+            trunkAng = -PI/2;
+        }
+    }
+    
+    private void rotateBodyUp() {
+        float dir = (float)Math.pow(-1, btoi(!isRight));
+        humanX = 2.*sin(PI/6);
+        
+        wholeBody(0, 0, - PI/6 * sin(trunkAng) * dir,
+                  0, -PI, armAng * dir, 0, 0, 0,
+                  0, -PI, armAng * dir, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -PI/6, 0, 0, 0,
+                  0, 0, PI/6, 0, 0, 0);
+                  
+        armAng += armOmg;
+        trunkAng += trunkOmg;
+        
+        if(armAng > PI*2) {
+            isRotateBodyUp = false;
+            isRight = ! isRight;
+            if(count <= 1) {
+                isCloseLeg = true;
+                isRotateBodyUp = false;
+            } else {
+                initializeVals();
+                count--;
+            }
+        }
+    }
+    
+    private void closeLeg() {
+        humanX = 2.*sin(legAng);
+        
+        wholeBody(0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+                  
+        legAng -= legOmg;
+        
+        if(legAng < 0) {
+            initializeVals();
+            count--;
+        }
+    }
+    
+    public void exec() {
+        if(isOpenLeg)             { openLeg(); }
+        else if(isArmUp)          { armUp(); }
+        else if(isRotateBodyDown) { rotateBodyDown(); }
+        else if(isRotateBodyUp)   { rotateBodyUp(); }
+        else if(isCloseLeg)       { closeLeg(); }
     }
 }

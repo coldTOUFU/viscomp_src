@@ -6,30 +6,30 @@ void drawRadioExercise() {
         fill(100);
 
         if(first.getCount() > 0) {
-            first.setArmOmg(.05);
+            first.setArmOmg(.03);
             first.exec();
         } else if(second.getCount() > 0) {
             second.setArmOmg(.05); second.setLegOmg(.05);
             second.exec();
         } else if(third.getCount() > 0) {
-            third.setArmOmg(.05);
+            third.setArmOmg(.075);
             third.exec();
         } else if(fourth.getCount() > 0) {
             fourth.setArmOmg(.05);
             fourth.setTrunkOmg(.05/7);
             fourth.exec();
         } else if(fifth.getCount() > 0) {
-            fifth.setArmOmg(.05);
-            fifth.setTrunkOmg(.05);
+            fifth.setArmOmg(.08);
+            fifth.setTrunkOmg(.08);
             fifth.exec();
         } else if(sixth.getCount() > 0) {
-            sixth.setArmOmg(.05);
-            sixth.setLegOmg(.05);
-            sixth.setTrunkOmg(.05);
+            sixth.setArmOmg(.03);
+            sixth.setLegOmg(.03);
+            sixth.setTrunkOmg(.03);
             sixth.exec();
         } else if(seventh.getCount() > 0) {
-            seventh.setArmOmg(.05);
-            seventh.setTrunkOmg(.1);
+            seventh.setArmOmg(.04);
+            seventh.setTrunkOmg(.08);
             seventh.exec();
         } else if(eighth.getCount() > 0) {
             eighth.setArmOmg(.05);
@@ -40,6 +40,11 @@ void drawRadioExercise() {
             ninth.setHipOmg(.025);
             ninth.setLegOmg(.025/3);
             ninth.exec();
+        } else if(tenth.getCount() > 0) {
+            tenth.setArmOmg(.05);
+            tenth.setTrunkOmg(.05);
+            tenth.setLegOmg(.05/3.);
+            tenth.exec();
         }
     popMatrix();
 }

@@ -7,6 +7,7 @@ BodyBendingBackForward sixth;
 BodyTwisting seventh;
 ShoulderBending eighth;
 HipBending ninth;
+BodyBigRotation tenth;
 
 void setup() {
     size(600, 600, P3D);
@@ -14,31 +15,34 @@ void setup() {
     
     // initialization for exercises.
     first = new DeepBreath();
-    first.setCount(0);
+    first.setCount(/*2*/0);
     
     second = new LegExpansion();
-    second.setCount(0);
+    second.setCount(/*8*/0);
     
     third = new ArmRotation();
-    third.setCount(0);
+    third.setCount(/*4*/0);
     
     fourth = new ChestCurving();
-    fourth.setCount(0);
+    fourth.setCount(/*4*/0);
     
     fifth = new BodyBendingBeside();
-    fifth.setCount(0);
+    fifth.setCount(/*8*/0);
     
     sixth = new BodyBendingBackForward();
-    sixth.setCount(0);
+    sixth.setCount(/*2*/0);
     
     seventh = new BodyTwisting();
-    seventh.setCount(0);
+    seventh.setCount(/*2*/0);
     
     eighth = new ShoulderBending();
-    eighth.setCount(0);
+    eighth.setCount(/*4*/0);
     
     ninth = new HipBending();
-    ninth.setCount(4);
+    ninth.setCount(/*4*/0);
+    
+    tenth = new BodyBigRotation();
+    tenth.setCount(4);
 }
 
 void draw() {
