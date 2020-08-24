@@ -12,11 +12,15 @@ Jump eleventh;
 LegExpansion twelveth;
 DeepBreath thirteenth;
 
+PImage terrainImg;
+
 void setup() {
     size(1000, 1000, P3D);
     noStroke();
     
-    PImage faceImg = loadImage("boyFace.png");
+    terrainImg = loadImage("terrain.jpg");
+    
+    PImage faceImg = loadImage("face.png");
     PImage headImg = loadImage("hair.png");
     PImage frontTrunkImg = loadImage("blueJerseyFront.png");
     PImage trunkImg = loadImage("blueJersey.png");
@@ -78,7 +82,7 @@ void setup() {
 }
 
 void draw() {
-    background(255);
+    background(#46A4DD);
     fill(150);
     translate(width/2, height/2, -width/2);
     rotateX(map(mouseY, 0, height, PI, -PI));
@@ -86,8 +90,10 @@ void draw() {
      
     pushMatrix();
         translate(0, -height/2, 0);
-        box(width*5, 0, width*5);
+        drawTerrain(terrainImg);
         translate(0, height/4, 0);
         drawRadioExercise();
     popMatrix();
 }
+
+// terrain.jpg: https://www.photock.jp/detail/lawn/375/
