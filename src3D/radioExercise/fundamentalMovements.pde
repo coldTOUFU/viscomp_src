@@ -1,4 +1,4 @@
-class Movements {
+class Movements extends Body {
     protected void rotateTrunk(float xAng, float yAng, float zAng) {
         rotateX(xAng); rotateY(yAng); rotateZ(zAng);
         translate(0, .875, 0); // trunk: box(1., 1.75, .75);. called place will be bottom of trunk.

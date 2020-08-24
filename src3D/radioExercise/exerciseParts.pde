@@ -5,7 +5,7 @@ class Exercise extends Movements {
     protected float humanX, humanY, humanZ; // place of the center of human's head.
     
     public Exercise() {
-        initializeVals();
+      initializeVals();
     }
     
     protected void initializeVals() {
@@ -1076,5 +1076,60 @@ class BodyBigRotation extends Exercise {
         else if(isRotateBodyDown) { rotateBodyDown(); }
         else if(isRotateBodyUp)   { rotateBodyUp(); }
         else if(isCloseLeg)       { closeLeg(); }
+    }
+}
+
+class Jump extends Exercise {
+    private float t, dt;
+    private float v_0;
+    
+    public Jump() {
+        super();
+        v_0 = 0;
+    }
+    
+    protected void initializeVals() {
+        t = 0;
+    }
+    
+    public void setDt(float f) {
+        dt = f;
+    }
+    
+    public void setV0(float f) {
+        v_0 = f;
+    }
+
+    public void exec() {
+        humanY = v_0 * t - .5 * G * t*t;
+        if(humanY < 0) {
+            t = 0;
+            humanY = 0;
+            count--;
+        }
+        
+        if(Math.ceil(count / 4.) % 2 == 1) {
+            if(count % 2 == 0) { // open body;
+                armAng += armOmg;
+                legAng += legOmg;
+            }
+            else {               // close body;
+                armAng -= armOmg;
+                legAng -= legOmg;
+            }
+        }
+        
+        wholeBody(0, 0, 0,
+                  0, 0, -armAng, 0, 0, 0,
+                  0, 0, armAng, 0, 0, 0,
+                  0, 0, 0,
+                  0, 0, -legAng, 0, 0, 0,
+                  0, 0, legAng, 0, 0, 0);
+        
+        t += dt;
+        
+        if(count <= 0) {
+            initializeVals();
+        }
     }
 }
